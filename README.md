@@ -39,7 +39,7 @@ A top-down parser that uses a one-token lookahead is called an **LL(1) parser**.
   $ ./a.out
 ```
 
-## Output
+## Results
 
 ```
 How many productions ? :8
@@ -135,6 +135,11 @@ Please enter the desired INPUT STRING = i+i*i$
                                             YOUR STRING HAS BEEN ACCEPTED !!
             =======================================================================================
             
+## Output
+![firstfollow](https://user-images.githubusercontent.com/66861242/164972224-1cc80ae9-d10d-433a-b6cf-7d20e0e7e760.png)
+
+![parsing_table](https://user-images.githubusercontent.com/66861242/164972228-1158ed86-360a-4410-adf5-c22d66bbf0c6.png)
+
 ## Contributors
 - [Rahul Anand](https://github.com/CrAzYJOKR)
 - [Indira Dutta](https://github.com/indiradutta)
