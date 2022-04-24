@@ -30,9 +30,9 @@ A top-down parser that uses a one-token lookahead is called an **LL(1) parser**.
 ## Installation and Quick Start
 
 ```
-  $ git clone https://github.com/srijarkoroy/LL1Mini
+  $ git clone https://github.com/srijarkoroy/Mini-LL1-Parser
   
-  $ cd LL1Mini
+  $ cd Mini-LL1-Parser
   
   $ gcc parser.c
   
