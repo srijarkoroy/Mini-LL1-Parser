@@ -146,3 +146,149 @@ int main(int argc,char **argv)
 		printf("%c\t\t",ter[ap]);
 	}
 	printf("\n\t\t\t=====================================================================================================================\n");
+	char first_prod[count][sid];
+	for(ap=0;ap<count;ap++){
+		int destiny = 0;
+		k = 2;
+		int ct = 0;
+		char tem[100];
+		while(production[ap][k] != '\0'){
+			if(!isupper(production[ap][k])){
+				tem[ct++] = production[ap][k];
+				tem[ct++] = '_';
+				tem[ct++] = '\0';
+				k++;
+				break;
+			}
+			else{
+				int zap=0;
+				int tuna = 0;
+				for(zap=0;zap<count;zap++){
+					if(calc_first[zap][0] == production[ap][k]){
+						for(tuna=1;tuna<100;tuna++){
+							if(calc_first[zap][tuna] != '!'){
+								tem[ct++] = calc_first[zap][tuna];
+							}
+							else
+								break;
+						}
+					break;
+					}
+				}
+				tem[ct++] = '_';
+			}
+			k++;
+		}
+		int zap = 0,tuna;		
+		for(tuna = 0;tuna<ct;tuna++){
+			if(tem[tuna] == '#'){
+				zap = 1;
+			}
+			else if(tem[tuna] == '_'){
+				if(zap == 1){
+					zap = 0;
+				}
+				else
+					break;
+			}
+			else{
+				first_prod[ap][destiny++] = tem[tuna];
+			}
+		}
+	}
+	char table[land][sid+1];
+	ptr = -1;
+	for(ap = 0; ap < land ; ap++){
+		for(kay = 0; kay < (sid + 1) ; kay++){
+			table[ap][kay] = '!';
+		}
+	}
+	for(ap = 0; ap < count ; ap++){
+		ck = production[ap][0];
+		xxx = 0;
+		for(kay = 0; kay <= ptr; kay++)
+			if(ck == table[kay][0])
+				xxx = 1;
+		if (xxx == 1)
+			continue;
+		else{
+			ptr = ptr + 1;
+			table[ptr][0] = ck;
+		}
+	}
+	for(ap = 0; ap < count ; ap++){
+		int tuna = 0;
+		while(first_prod[ap][tuna] != '\0'){
+			int to,ni=0;
+			for(to=0;to<sid;to++){
+				if(first_prod[ap][tuna] == ter[to]){
+					ni = 1;
+				}
+			}
+			if(ni == 1){
+				char xz = production[ap][0];
+				int cz=0;
+				while(table[cz][0] != xz){
+					cz = cz + 1;
+				}
+				int vz=0;
+				while(ter[vz] != first_prod[ap][tuna]){
+					vz = vz + 1;
+				}
+				table[cz][vz+1] = (char)(ap + 65);
+			}
+			tuna++;
+		}
+	}
+	for(k=0;k<sid;k++){
+		for(kay=0;kay<100;kay++){
+			if(calc_first[k][kay] == '!'){
+				break;
+			}
+			else if(calc_first[k][kay] == '#'){
+				int fz = 1;
+				while(calc_follow[k][fz] != '!'){
+					char xz = production[k][0];
+					int cz=0;
+					while(table[cz][0] != xz){
+						cz = cz + 1;
+					}
+					int vz=0;
+					while(ter[vz] != calc_follow[k][fz]){
+						vz = vz + 1;
+					}
+					table[k][vz+1] = '#';
+					fz++;	
+				}
+				break;
+			}
+		}
+	}
+	for(ap = 0; ap < land ; ap++){
+		printf("\t\t\t   %c\t|\t",table[ap][0]);
+		for(kay = 1; kay < (sid + 1) ; kay++){
+			if(table[ap][kay] == '!')
+				printf("\t\t");
+			else if(table[ap][kay] == '#')
+				printf("%c=#\t\t",table[ap][0]);
+			else{
+				int mum = (int)(table[ap][kay]);
+				mum -= 65;
+				printf("%s\t\t",production[mum]);
+			}
+		}
+		printf("\n");
+		printf("\t\t\t---------------------------------------------------------------------------------------------------------------------");
+		printf("\n");
+	}
+	int j;
+	printf("\n\nPlease enter the desired INPUT STRING = ");
+	char input[100];
+	scanf("%s%c",input,&ch);
+	printf("\n\t\t\t\t\t===========================================================================\n");
+	printf("\t\t\t\t\t\tStack\t\t\tInput\t\t\tAction");
+	printf("\n\t\t\t\t\t===========================================================================\n");
+	int i_ptr = 0,s_ptr = 1;
+	char stack[100];
+	stack[0] = '$';
+	stack[1] = table[0][0];
